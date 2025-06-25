@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import {
   FacebookShareButton,
@@ -16,7 +14,9 @@ import {
 
 import './sharecount.css';
 
-type Props = { url: string };
+interface Props {
+  url: string;
+}
 
 export const shareCount = (count: number) =>
   count !== 0 ? <p className="shareCount">{count}</p> : <p />;
@@ -53,3 +53,4 @@ export default (props: Props) => {
     </div>
   );
 };
+

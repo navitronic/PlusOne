@@ -1,13 +1,11 @@
-// @flow
-
 import config from '../../../../config';
 
-type SquareState = {
-  value: number | null,
-  drop: number,
-  toggle: boolean,
-  merged: boolean
-};
+interface SquareState {
+  value: number | null;
+  drop: number;
+  toggle: boolean;
+  merged: boolean;
+}
 
 export type BoardState = Array<Array<SquareState>>;
 
@@ -55,7 +53,11 @@ export function getMax(squares: BoardState): number {
   }, 0);
 }
 
-export function refill(board: BoardState, max: number, forbidden: Array<number> = []): BoardState {
+export function refill(
+  board: BoardState,
+  max: number,
+  forbidden: number[] = []
+): BoardState {
   const squares: BoardState = JSON.parse(JSON.stringify(board));
 
   const min = Math.min(Math.max(max - config.generator.usualRange, 1), getMin(squares));
@@ -193,3 +195,4 @@ export function collapse(collapseX: number, collapseY: number, board: BoardState
   }
   return squares;
 }
+

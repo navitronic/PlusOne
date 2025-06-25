@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 
 import config from '../../config';
@@ -12,3 +10,4 @@ export default () => (
     <p className="version">{config.version}</p>
   </div>
 );
+
