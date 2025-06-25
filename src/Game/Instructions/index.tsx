@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 
 export default () => (
@@ -20,3 +18,4 @@ export default () => (
     <p>Good luck!</p>
   </div>
 );
+

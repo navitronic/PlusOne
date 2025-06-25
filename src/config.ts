@@ -1,22 +1,20 @@
-// @flow
+export interface FeatureFlags {
+  ScoreServer: boolean;
+  StartWithOnesOnly: boolean;
+}
 
-export type FeatureFlags = {
-  ScoreServer: boolean,
-  StartWithOnesOnly: boolean
-};
+export interface GeneratorConfig {
+  maxInitial: number;
+  usualRange: number;
+}
 
-export type GeneratorConfig = {
-  maxInitial: number,
-  usualRange: number
-};
-
-export type Config = {
-  version: string,
-  providerUrl: string,
-  homepage: string,
-  generator: GeneratorConfig,
-  features: FeatureFlags
-};
+export interface Config {
+  version: string;
+  providerUrl: string;
+  homepage: string;
+  generator: GeneratorConfig;
+  features: FeatureFlags;
+}
 
 const config: Config = {
   version: process.env.APP_VERSION
@@ -41,3 +39,4 @@ const config: Config = {
 };
 
 export default config;
+

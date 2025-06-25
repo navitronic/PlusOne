@@ -1,21 +1,20 @@
-// @flow
 import fetch from 'cross-fetch';
 
-type WireScoreDefinition = {
-  timesReached: number,
-  globalHighScore: number
-};
+interface WireScoreDefinition {
+  timesReached: number;
+  globalHighScore: number;
+}
 
-type WireScoreError = {
-  error: string
-};
+interface WireScoreError {
+  error: string;
+}
 
 type WireScoreResponse = WireScoreDefinition | WireScoreError;
 
-export type ScoreBoardFromServer = {
-  reachedBy: number,
-  globalHighScore: ?number
-};
+export interface ScoreBoardFromServer {
+  reachedBy: number;
+  globalHighScore?: number | null;
+}
 
 const fetchWith = (url: string, options: any): Promise<WireScoreResponse> =>
   fetch(url, options)
@@ -45,7 +44,9 @@ const apiPost = (
     body: JSON.stringify(body)
   });
 
-const handleResponse = (response: WireScoreResponse): ?ScoreBoardFromServer => {
+const handleResponse = (
+  response: WireScoreResponse
+): ScoreBoardFromServer | undefined => {
   if (typeof response.error === 'string') {
     console.error(`Unable to reach ScoreBoard due to ${response.error}`);
   }
@@ -60,8 +61,7 @@ const handleResponse = (response: WireScoreResponse): ?ScoreBoardFromServer => {
 };
 
 export default (hostAndPort: string, userId: string) => ({
-  reachedScore: (score: number): Promise<?ScoreBoardFromServer> =>
-    apiPost(hostAndPort, 'scoreboard', { score, u: userId }).then(
-      handleResponse
-    )
+  reachedScore: (score: number): Promise<ScoreBoardFromServer | undefined> =>
+    apiPost(hostAndPort, 'scoreboard', { score, u: userId }).then(handleResponse)
 });
+

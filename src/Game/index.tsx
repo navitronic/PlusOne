@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 
 import './game.css';
@@ -19,3 +17,4 @@ export default () => (
     <VersionNumber />
   </div>
 );
+

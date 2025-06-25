@@ -1,19 +1,17 @@
-// @flow
-
 import React from 'react';
 import classnames from 'classnames';
 
 import config from '../../../../config';
 import './scoreboard.css';
 
-type Props = {
-  highScore: number,
-  currentScore: number,
-  currentScoreReachedBy: ?number,
-  globalHighScore: ?number,
-  canMove: boolean,
-  onReset: () => void
-};
+interface Props {
+  highScore: number;
+  currentScore: number;
+  currentScoreReachedBy?: number | null;
+  globalHighScore?: number | null;
+  canMove: boolean;
+  onReset: () => void;
+}
 
 export default class ScoreBoard extends React.Component<Props> {
   static scoreFor(score: number) {
@@ -87,3 +85,4 @@ export default class ScoreBoard extends React.Component<Props> {
     );
   }
 }
+

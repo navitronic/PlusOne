@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import store from 'store';
 import uuidv4 from 'uuid/v4';
@@ -19,27 +17,27 @@ import {
 } from './service/board';
 import api from './service/api';
 import config from '../../config';
-import type { BoardState } from './service/board';
-import type { ScoreBoardFromServer } from './service/api';
+import { BoardState } from './service/board';
+import { ScoreBoardFromServer } from './service/api';
 
-type Props = {
-  x: number,
-  y: number,
-  maxInitial: number
-};
+interface Props {
+  x: number;
+  y: number;
+  maxInitial: number;
+}
 
-type State = {
-  max: number,
-  highScore: number,
-  canMove: boolean,
-  squares: BoardState,
-  currentScoreReachedBy: ?number,
-  globalHighScore: ?number
-};
+interface State {
+  max: number;
+  highScore: number;
+  canMove: boolean;
+  squares: BoardState;
+  currentScoreReachedBy?: number | null;
+  globalHighScore?: number | null;
+}
 
 export default class Board extends React.Component<Props, State> {
   static determineHighScore(max: number): number {
-    const storedHighScore: ?number = store.get('highScore');
+    const storedHighScore = store.get('highScore') as number | undefined | null;
     if (
       storedHighScore === undefined ||
       storedHighScore === null ||
@@ -57,7 +55,7 @@ export default class Board extends React.Component<Props, State> {
   }
 
   static getUserId(): string {
-    const storedUserId: ?string = store.get('user');
+    const storedUserId = store.get('user') as string | undefined | null;
     if (storedUserId === undefined || storedUserId === null) {
       store.set('user', uuidv4());
     }
@@ -115,13 +113,15 @@ export default class Board extends React.Component<Props, State> {
     const scoreServer = api(config.providerUrl, Board.getUserId());
 
     if ((this.state && max !== this.state.max) || !this.state) {
-      scoreServer.reachedScore(max).then((resp: ?ScoreBoardFromServer) => {
-        this.setState(state => ({
-          ...state,
-          currentScoreReachedBy: resp ? resp.reachedBy : undefined,
-          globalHighScore: resp ? resp.globalHighScore : undefined
-        }));
-      });
+      scoreServer
+        .reachedScore(max)
+        .then((resp: ScoreBoardFromServer | undefined) => {
+          this.setState(state => ({
+            ...state,
+            currentScoreReachedBy: resp ? resp.reachedBy : undefined,
+            globalHighScore: resp ? resp.globalHighScore : undefined
+          }));
+        });
     }
     if (
       this.state &&
@@ -144,7 +144,7 @@ export default class Board extends React.Component<Props, State> {
     };
   }
 
-  borderWith(i: number, j: number, value: ?number) {
+  borderWith(i: number, j: number, value: number | null | undefined) {
     const { x, y } = this.props;
     if (i < 0 || i >= x) return true;
     if (j < 0 || j >= y) return true;
@@ -211,3 +211,4 @@ export default class Board extends React.Component<Props, State> {
     );
   }
 }
+
